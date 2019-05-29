@@ -1,0 +1,108 @@
+#include <iostream>
+#include <conio.h>
+#include <iomanip>
+#include <cmath>
+
+
+using namespace std;
+
+int main()
+{
+	double side1,side2,side3; //side lengths//
+	double sq1,sq2,sq3; //side length squared//
+	double anglea,angleb,anglec; //interior angles//
+	double perimeter; //perimeter//
+	double area,semiperimeter,heron; //for getting area//
+	double pi=3.1415926535897; //pi constant//
+	double degrees,dga,dgb,dgc; //radians to degrees conversion//
+	double circumcenter,circv,apothem; //for apothem and circumcenter lengths//
+	
+	
+	//asks for the sides//
+	cout<<"Please enter the length of the sides of the triangle"<<endl;
+	cout<<"Side 1 (left side) = ";
+	cin>>side1;
+	cout<<"Side 2 (right side) = ";
+	cin>>side2;
+	cout<<"Side 3 (base) = ";
+	cin>>side3;
+	
+	//getting the squares of the side lengths//
+	sq1=pow(side1,2);
+	sq2=pow(side2,2);
+	sq3=pow(side3,2);
+	
+	//interior angles//
+	anglea=acos((sq2+sq3-sq1)/(2*side2*side3));
+	angleb=acos((sq3+sq1-sq2)/(2*side1*side3));
+	anglec=acos((sq1+sq2-sq3)/(2*side1*side2));
+	cout<<" "<<endl;
+	cout<<"Angle A = "<<anglea<<endl;
+	cout<<"Angle B = "<<angleb<<endl;
+	cout<<"Angle C = "<<anglec<<endl;
+	
+	//conditions for Triangle type//
+	if (side1==side2 && side2==side3 && side1==side3) //if all sides are equal//
+	{
+		cout<<"Triangle is an Equilateral triangle."<<endl;
+	}
+	else if (side1==side2 || side1==side3 || side2==side3) //if 2 sides are equal//
+	{
+		cout<<"Triangle is an Isosceles triangle."<<endl;
+	}
+	else //if no sides are equal//
+	{
+		cout<<"Triangle is a Scalene triangle."<<endl;
+	}
+	
+	perimeter=side1+side2+side3; // getting perimeter//
+	cout<<"Perimeter = "<<perimeter<<" units"<<endl;
+	
+	//Formula for getting area using heron's formula//
+	semiperimeter=(perimeter/2);
+	heron=semiperimeter*(semiperimeter-side1)*(semiperimeter-side2)*(semiperimeter-side3);
+	area=pow(heron,0.50);
+	
+	if(area>0)
+	{
+		cout<<"Area = "<<area<<" squared units"<<endl;
+	}
+	else //if the sizes given has impossible side lengths for a triangle//
+	{
+		cout<<"Impossible side lengths due to Triangle Inequality Theorem."<<endl;
+	}
+
+	//connverting radians to degrees to be used for angle type of triangle//
+	degrees=(180/pi);
+	dga=anglea*degrees;
+	dgb=angleb*degrees;
+	dgc=anglec*degrees;
+
+	if (dgb>=91 || dgc>=91 || dga>=91) //I put dg>=91 instead of dg>90 because for some reason, the condition still accepts dg=90 if dg>90 is the condition// 
+	{
+		cout<<"Triangle is an Obtuse triangle."<<endl; //one angle is greater than 90//
+	}
+	else if(dga==dgb && dgb==dgc)  //all angles are equal//
+	{
+		cout<<"Triangle is an Equiangular triangle."<<endl;
+	}
+	else if(dga>0 && dgb>0 && dgc>0 && dga<90 && dgb<90 && dgc<90) //if all angles are lesser than 90//
+	{
+		cout<<"Triangle is an Acute triangle."<<endl;
+	}
+	else //if one angle is equal to 90//
+	{
+		cout<<"Triangle is a Right triangle."<<endl;
+	}
+	
+	//Apothem length//
+	apothem=(2*area)/perimeter;
+	cout<<"Apothem = "<<apothem<<endl;
+	//Circumcenter length//
+	circv=side1*side2*side3;
+	circumcenter=(circv)/(4*area);
+	cout<<"Circumcenter length = "<<circumcenter<<endl;
+	
+	_getch();
+	return 0;
+}
